@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"module": "es6",
 	"scripts": {
-		"start": "tsx watch ./app.ts",
+		"start": "tsx watch ./src/app.ts",
 		"type-check": "tsc --noEmit",
 		"build": "tsc"
 	},
@@ -13,6 +13,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@prisma/client": "^5.22.0",
 		"dotenv": "^16.4.5",
 		"express": "^4.21.1"
 	},
