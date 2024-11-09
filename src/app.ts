@@ -1,13 +1,15 @@
 import express from 'express';
+import routes from './routes';
+import errorHandler from './middleware/errorHandler';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-	res.json({ msg: 'Hello, World!' });
-});
+app.use('/auth', routes.auth);
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
 	try {
