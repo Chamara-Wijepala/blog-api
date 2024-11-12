@@ -21,9 +21,6 @@ app.use('/auth', routes.auth);
 // Test route: Delete later
 app.get(
 	'/protected',
-	(req, res, next) => {
-		next();
-	},
 	passport.authenticate('jwt', { session: false }),
 	(req, res) => {
 		res.json({ msg: 'You are authenticated!' });

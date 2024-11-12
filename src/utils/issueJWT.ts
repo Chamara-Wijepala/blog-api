@@ -13,7 +13,6 @@ const issueJWT = (userId: string) => {
 
 	const payload = {
 		sub: userId,
-		iat: Date.now(),
 	};
 	const options: SignOptions = {
 		expiresIn: expiresIn,
