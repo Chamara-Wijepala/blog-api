@@ -1,6 +1,16 @@
 import { body } from 'express-validator';
 import prisma from '../../db/client';
 
+const validateLogin = [
+	body('username')
+		.trim()
+		.notEmpty()
+		.withMessage('Username is required.')
+		.escape(),
+
+	body('password').trim().notEmpty().withMessage('Password is required.'),
+];
+
 const validateRegistration = [
 	body('username')
 		.trim()
@@ -31,4 +41,7 @@ const validateRegistration = [
 		.withMessage('Passwords do not match.'),
 ];
 
-export default validateRegistration;
+export default {
+	validateLogin,
+	validateRegistration,
+};
