@@ -17,6 +17,7 @@ app.use(cors());
 app.use(passport.initialize());
 
 app.use('/auth', routes.auth);
+app.use('/posts', routes.posts);
 
 app.use(errorHandler);
 
