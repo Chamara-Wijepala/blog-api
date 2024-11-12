@@ -41,7 +41,25 @@ const validateRegistration = [
 		.withMessage('Passwords do not match.'),
 ];
 
+const validateAuthorization = [
+	body('username')
+		.trim()
+		.notEmpty()
+		.withMessage('Username is required.')
+		.escape(),
+
+	body('passphrase')
+		.trim()
+		.notEmpty()
+		.withMessage('The passphrase is required.')
+		.custom((value) => {
+			return value === process.env.AUTHORIZATION_PASSPHRASE;
+		})
+		.withMessage('Incorrect passphrase'),
+];
+
 export default {
 	validateLogin,
 	validateRegistration,
+	validateAuthorization,
 };

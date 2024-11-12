@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { Role } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import prisma from '../db/client';
 import issueJWT from '../utils/issueJWT';
@@ -60,7 +61,41 @@ const authenticateUser = async (
 	}
 };
 
+const authorizeUserByRoleName = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const roleName = req.params.roleName.toUpperCase();
+
+	if (!Object.values(Role).includes(roleName as Role)) {
+		res.status(400).json({ msg: 'Invalid role name' });
+		return;
+	}
+
+	try {
+		const user = await prisma.user.update({
+			where: {
+				username: req.body.username,
+			},
+			data: {
+				role: roleName as Role,
+			},
+			select: {
+				id: true,
+				username: true,
+				role: true,
+			},
+		});
+
+		res.status(200).json({ user });
+	} catch (err) {
+		return next(err);
+	}
+};
+
 export default {
 	createUser,
 	authenticateUser,
+	authorizeUserByRoleName,
 };

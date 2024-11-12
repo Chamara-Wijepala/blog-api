@@ -18,15 +18,6 @@ app.use(passport.initialize());
 
 app.use('/auth', routes.auth);
 
-// Test route: Delete later
-app.get(
-	'/protected',
-	passport.authenticate('jwt', { session: false }),
-	(req, res) => {
-		res.json({ msg: 'You are authenticated!' });
-	}
-);
-
 app.use(errorHandler);
 
 app.listen(PORT, () => {
