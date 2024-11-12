@@ -1,5 +1,6 @@
 import express from 'express';
-import validateRegistration from '../validators/validateRegistration';
+import validateRegistration from '../utils/validators/validateRegistration';
+import validateLogin from '../utils/validators/validateLogin';
 import checkValidationErrors from '../middleware/checkValidationErrors';
 import authController from '../controllers/authController';
 
@@ -10,6 +11,13 @@ router.post(
 	validateRegistration,
 	checkValidationErrors,
 	authController.createUser
+);
+
+router.post(
+	'/login',
+	validateLogin,
+	checkValidationErrors,
+	authController.authenticateUser
 );
 
 export default router;
