@@ -2,34 +2,32 @@ import express from 'express';
 import passport from 'passport';
 import validators from './validators';
 import checkValidationErrors from '../../middleware/checkValidationErrors';
-import postsController from '../../controllers/postsController';
+import commentsController from '../../controllers/commentsController';
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
-router.get('/', postsController.getPublishedPosts);
-
-router.get('/:postId', postsController.getPost);
+router.get('/', commentsController.getComments);
 
 router.post(
 	'/',
 	passport.authenticate('jwt', { session: false }),
-	validators.validatePost,
+	validators.validateComment,
 	checkValidationErrors,
-	postsController.createPost
+	commentsController.createComment
 );
 
 router.patch(
-	'/:postId',
+	'/:commentId',
 	passport.authenticate('jwt', { session: false }),
-	validators.validatePost,
+	validators.validateComment,
 	checkValidationErrors,
-	postsController.updatePost
+	commentsController.updateComment
 );
 
 router.delete(
-	'/:postId',
+	'/:commentId',
 	passport.authenticate('jwt', { session: false }),
-	postsController.deletePost
+	commentsController.deleteComment
 );
 
 export default router;

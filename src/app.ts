@@ -18,6 +18,7 @@ app.use(passport.initialize());
 
 app.use('/auth', routes.auth);
 app.use('/posts', routes.posts);
+app.use('/posts/:postId/comments', routes.comments);
 
 app.use(errorHandler);
 
