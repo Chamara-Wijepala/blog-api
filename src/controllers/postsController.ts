@@ -93,6 +93,17 @@ const updatePost = async (req: Request, res: Response, next: NextFunction) => {
 	if (req.user.role !== 'AUTHOR') return next();
 
 	try {
+		const post = await prisma.post.findUnique({
+			where: {
+				id: postId,
+			},
+		});
+
+		if (!post) throw new Error('Post not found.');
+		if (post.authorId !== req.user.id) {
+			throw new Error('You do not have permission to update this post.');
+		}
+
 		await prisma.post.update({
 			where: {
 				id: postId,
@@ -117,6 +128,17 @@ const deletePost = async (req: Request, res: Response, next: NextFunction) => {
 	if (req.user.role !== 'AUTHOR') return next();
 
 	try {
+		const post = await prisma.post.findUnique({
+			where: {
+				id: postId,
+			},
+		});
+
+		if (!post) throw new Error('Post not found.');
+		if (post.authorId !== req.user.id) {
+			throw new Error('You do not have permission to delete this post.');
+		}
+
 		await prisma.post.delete({
 			where: {
 				id: postId,
